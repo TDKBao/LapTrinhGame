@@ -4,45 +4,52 @@ using UnityEngine;
 
 public class Plane : MonoBehaviour
 {
-    public float speed;
+    public float speed = 50f;
+    public float maxVelocity = 4f;
 
-    // Start is called before the first frame update
-    void Start()
+    private Rigidbody2D mybody;
+
+    [SerializeField]
+    private GameObject bullet;
+    
+    void Awake()
     {
-        
+        mybody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        //if (Input.GetKey(KeyCode.UpArrow) && transform.position.y < 4.24f)
-        //{
-        //    transform.Translate(Vector3.up * speed * Time.deltaTime);
-        //}
-        //if (Input.GetKey(KeyCode.DownArrow) && transform.position.y > -4.24f)
-        //{
-        //    transform.Translate(Vector3.down * speed * Time.deltaTime);
-        //}
-        //if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > -9.78f)
-        //{
-        //    transform.Translate(Vector3.left * speed * Time.deltaTime);
-        //}
-        //if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < 9.78f)
-        //{
-        //    transform.Translate(Vector3.right * speed * Time.deltaTime);
-        //}
-        Vector3 temp = transform.position;
-        temp.y -= speed * Time.deltaTime;
-        if (temp.y < -4)
+        Move();
+        if(Input.GetKeyUp(KeyCode.Space))
         {
-            temp.y = -4;
-            speed = -speed;
+            Instantiate(bullet, transform.position, Quaternion.identity);
         }
-        if (temp.y > 4)
-        {
-            temp.y = 4;
-            speed = -speed;
-        }
-        transform.position = temp;
     }
+
+    private void Move()
+    {
+        float forceX = 0f;
+        float vel = Mathf.Abs(mybody.velocity.x);
+
+        float h = Input.GetAxisRaw("Horizontal");
+        if(h>0)
+        {
+            if (vel < maxVelocity) forceX = speed;
+        }
+        else if (h < 0)
+        {
+            if (vel < maxVelocity) forceX = -speed;
+        }
+        mybody.AddForce(new Vector2(forceX, 0));
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "GameController")
+        {
+            Destroy(gameObject);
+
+        }
+       
+    }
+
 }
