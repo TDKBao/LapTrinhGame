@@ -6,6 +6,8 @@ public class ModMoveDisable : MonoBehaviour
 {
     private float speed = 10f;
 
+    [SerializeField]
+    private GameObject effect;
     void Update()
     {
         Move();
@@ -23,17 +25,16 @@ public class ModMoveDisable : MonoBehaviour
         {
             Destroy(gameObject);
 
-
         }
         else if (collision.gameObject.tag == "Right")
         {
             Destroy(gameObject);
 
-
         }
         else if (collision.gameObject.tag == "Bullet")
         {
             Destroy(gameObject);
+            Destroy(Instantiate(effect, transform.position, this.transform.rotation), 2);
 
         }
     }

@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
 
         if(h>0)
         {
+            anim.SetBool("Walk", true);
             if(vel < maxVelocity)
             {
                 forceX = moveForece;
@@ -39,13 +40,19 @@ public class Player : MonoBehaviour
         }
         else if (h<0)
         {
-            if(vel<maxVelocity)
+            anim.SetBool("Walk", true);
+            if (vel<maxVelocity)
             {
                 forceX = -moveForece;
             }
             Vector3 v = transform.localScale;
             v.x = -1f;
             transform.localScale = v;
+        }
+        else if(h==0)
+        {
+            anim.SetBool("Walk", false);
+
         }
         if (Input.GetKey(KeyCode.Space))
         {

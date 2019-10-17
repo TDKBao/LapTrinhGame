@@ -8,7 +8,8 @@ public class ModMoveLeftRight : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     private GameObject modbullet;
-
+    [SerializeField]
+    private GameObject destroyMod;
     void Start()
     {
         StartCoroutine(BulletFromMod());
@@ -42,7 +43,7 @@ public class ModMoveLeftRight : MonoBehaviour
         {
             speed = -speed;
             Vector2 scale = transform.localScale;
-            scale.x = -1f;
+            scale.x = -0.5f;
             transform.localScale = scale;
 
         }
@@ -50,12 +51,13 @@ public class ModMoveLeftRight : MonoBehaviour
         {
             speed = -speed;
             Vector2 scale = transform.localScale;
-            scale.x = 1f;
+            scale.x = 0.5f;
             transform.localScale = scale;
         }
         else if (collision.gameObject.tag == "Bullet")
         {
             Destroy(gameObject);
+            Destroy(Instantiate(destroyMod, transform.position, this.transform.rotation), 2);
 
         }
     }

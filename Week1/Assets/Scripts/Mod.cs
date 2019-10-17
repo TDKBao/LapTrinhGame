@@ -6,7 +6,9 @@ public class Mod : MonoBehaviour
 {
     public float speed;
     // Start is called before the first frame update
-    
+
+    [SerializeField]
+    private GameObject effect;
 
     // Update is called once per frame
     void Update()
@@ -30,7 +32,7 @@ public class Mod : MonoBehaviour
         if(collision.gameObject.tag =="Bullet")
         {
             Destroy(gameObject);
-            
+            Destroy(Instantiate(effect, transform.position, this.transform.rotation), 2);
         }
     }
 }
