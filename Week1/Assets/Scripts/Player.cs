@@ -71,6 +71,14 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         { grounded = true; }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "BulletMod")
+        {
+            Destroy(gameObject);
+            GameObject.Find("GameplayController").GetComponent<Gameplaycontroller>().PlayerDie();
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

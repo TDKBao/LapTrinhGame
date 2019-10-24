@@ -10,6 +10,7 @@ TagManager:
   - Mod
   - Bullet
   - Spawner
+  - BulletMod
   layers:
   - Default
   - TransparentFX
